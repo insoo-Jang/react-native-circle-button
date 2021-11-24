@@ -6,9 +6,14 @@ import {
 import { fontSizeSet } from './size'
 import { colorSet } from './colors'
 
-export const TestView = styled.View`
-    flex: 1;
-    align-items: center;
-    padding: 0;
+export const ToggleButtonWrap = styled.View`
+    border: 1px solid red;
 `
-TestView.displayName = 'TestView'
+ToggleButtonWrap.displayName = 'ToggleButtonWrap'
+
+export const ToggleButtonContainer = styled.View`
+    border: 1px solid blue;
+    align-items: center;
+    width: 100px;
+`
+ToggleButtonContainer.displayName = 'ToggleButtonContainer'
