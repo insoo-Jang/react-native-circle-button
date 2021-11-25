@@ -1,23 +1,10 @@
 import React from 'react'
-import {
-    Button,
-    Text,
-    TouchableOpacity,
-    View,
-    StyleSheet,
-    Image,
-} from 'react-native'
-import { fontSizeSet } from './size'
-import { colorSet } from './colors'
 import PropTypes from 'prop-types'
 import {
     ToggleButtonContainer,
     ToggleButtonInner,
     ToggleButtonTitle,
-    ToggleButtonWrap,
 } from './style'
-import { SvgUri } from 'react-native-svg'
-import { Platform } from 'react-native'
 import PowerOff from '../assets/powerOff.svg'
 
 export default function CircleButton(props) {
@@ -25,54 +12,47 @@ export default function CircleButton(props) {
         title,
         titleStyle,
         buttonStyle,
+        buttonInnerStyle,
         shape = 'circle',
         disabled,
-        color,
-        onPress,
-        width,
-        height,
+        onToggle,
+        isOn,
+        width = 100,
+        height = 100,
     } = props
-    const [status, setStatus] = React.useState(false)
 
     return (
-        <ToggleButtonWrap>
+        <>
             <ToggleButtonContainer
+                shape={shape}
+                height={height}
+                width={width}
                 style={{
-                    borderRadius: 100,
-                    height: 100,
-                    width: 100,
-                    elevation: 5,
+                    ...buttonStyle,
                 }}
-                onPress={() => {
-                    setStatus(!status)
-                }}
+                onPress={onToggle}
                 disabled={disabled}
             >
                 <ToggleButtonInner
+                    shape={shape}
+                    width={width}
+                    height={height}
+                    isOn={isOn}
                     style={{
-                        width: 85,
-                        height: 85,
-                        borderRadius: 100,
-                        borderColor: status ? '#ff8585' : '#87e3a6',
-                        borderWidth: 1.5,
-                        elevation: 5,
-                        shadowColor: status ? '#ff3535' : '#1ACA5C',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: colorSet.white,
+                        ...buttonInnerStyle,
                     }}
                 >
                     <PowerOff
-                        width={40}
-                        height={40}
-                        fill={status ? 'red' : '#1ACA5C'}
+                        width={width - 60}
+                        height={height - 60}
+                        fill={isOn ? 'red' : '#1ACA5C'}
                     />
                 </ToggleButtonInner>
             </ToggleButtonContainer>
-            <ToggleButtonTitle>
-                {status ? '작업중지' : '작업시작'}
+            <ToggleButtonTitle style={{ ...titleStyle }}>
+                {title}
             </ToggleButtonTitle>
-        </ToggleButtonWrap>
+        </>
     )
 }
 
@@ -80,19 +60,11 @@ CircleButton.propTypes = {
     title: PropTypes.string,
     titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.node]),
     buttonStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.node]),
+    buttonInnerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.node]),
     shape: PropTypes.oneOf(['circle' | 'square']),
-    loading: PropTypes.bool,
-    loadingStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.node]),
-    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.node]),
-    icon: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.node,
-        PropTypes.string,
-    ]),
-    iconPosition: PropTypes.oneOf(['left' | 'right' | 'top' | 'bottom']),
-    iconSize: PropTypes.number,
-    iconContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.node]),
     disabled: PropTypes.bool,
-    disabledStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.node]),
-    disabledTitleStyle: PropTypes.string,
+    onToggle: PropTypes.func,
+    isOn: PropTypes.bool,
+    width: PropTypes.number,
+    height: PropTypes.number,
 }
